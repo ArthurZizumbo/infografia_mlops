@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps: Mejores Prácticas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            color: #333;
+        }
+
+        .infographic {
+            width: 1000px;
+            margin: 0 auto;
+            background: white;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #17a2b8 100%);
+            color: white;
+            padding: 35px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.3em;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 25px 60px;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        .section-title .number {
+            width: 38px;
+            height: 38px;
+            margin-right: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        /* Layout horizontal imagen + texto */
+        .horizontal-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 12px 0;
+        }
+
+        .section-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3e8f0 100%);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .box h3 {
+            color: #667eea;
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .box ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.85em;
+        }
+
+        .box li {
+            padding: 4px 0 4px 18px;
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .box li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .box p {
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #ff8c00;
+        }
+
+        .highlight h3 {
+            color: #d63031;
+            margin-bottom: 6px;
+            font-size: 1em;
+        }
+
+        .highlight p {
+            font-size: 0.8em;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .flow {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .flow h3 {
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .flow-box h4 {
+            margin-bottom: 4px;
+            font-size: 0.95em;
+        }
+
+        .flow-box p {
+            font-size: 0.8em;
+            line-height: 1.3;
+        }
+
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .tool {
+            background: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            font-weight: 700;
+            color: #667eea;
+            font-size: 0.9em;
+            border: 2px solid #667eea;
+        }
+
+        .role {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .role h3 {
+            font-size: 0.95em;
+            margin-bottom: 6px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 4px;
+        }
+
+        .role p {
+            font-size: 0.8em;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        .references {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .references h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .references ol {
+            line-height: 1.6;
+            padding-left: 18px;
+            font-size: 0.75em;
+        }
+
+        .references li {
+            margin-bottom: 6px;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .footer h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .footer p {
+            line-height: 1.6;
+            font-weight: 300;
+            font-size: 0.9em;
+        }
+
+        .ref-note {
+            font-size: 0.7em;
+            color: #666;
+            font-style: italic;
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid #ddd;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .infographic {
+                page-break-inside: avoid;
+            }
+            .section {
+                margin-bottom: 22px;
+                page-break-inside: avoid;
+                break-inside: avoid-page;
+            }
+            .header, .footer, .content {
+                page-break-inside: avoid;
+                break-inside: avoid-page;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="infographic">
+        <div class="header">
+            <h1>MLOPS: MEJORES PRÁCTICAS</h1>
+            <p>Guía Práctica para Proyectos de Machine Learning</p>
+            <p>A01796363-Arthur Jafed Zizumbo Velasco</p>
+        </div>
+
+        <div class="content">
+
+            <!-- SECCIÓN 1 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">1</div>
+                    <h2>Código Bien Organizado</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_1.png" alt="Fundamentos" class="section-image">
+
+                    <div class="content-area">
+                        <div class="three-column">
+                            <div class="box">
+                                <h3>Abstracción</h3>
+                                <ul>
+                                    <li>Esconde lo complicado</li>
+                                    <li>Muestra lo necesario</li>
+                                    <li>Fácil de entender</li>
+                                </ul>
+                            </div>
+
+                            <div class="box">
+                                <h3>Encapsulación</h3>
+                                <ul>
+                                    <li>Protege datos</li>
+                                    <li>Evita errores</li>
+                                    <li>No valores fijos (hardcodeados X_X)</li>
+                                </ul>
+                            </div>
+
+                            <div class="box">
+                                <h3>Modularidad</h3>
+                                <ul>
+                                    <li>Piezas separadas</li>
+                                    <li>Fácil extender</li>
+                                    <li>Reutilizable</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="highlight">
+                            <h3>Del Notebook a Producción</h3>
+                            <p><strong>Evita:</strong> Código repetido, copiar-pegar, valores fijos</p>
+                            <p><strong>Objetivo:</strong> Código limpio, probado y listo para producción</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-note">
+                    Ref: Senthil E. (2023). MLOps-Refactoring Python Code | Amos, D. (2024). OOP in Python. Real Python
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">2</div>
+                    <h2>Estructura del Proyecto</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_2.png" alt="Estructura" class="section-image">
+
+                    <div class="content-area">
+                        <div class="two-column">
+                            <div class="box">
+                                <h3>Cookie Cutter</h3>
+                                <ul>
+                                    <li><strong>data/</strong> Datos originales</li>
+                                    <li><strong>models/</strong> Modelos guardados</li>
+                                    <li><strong>mlops/</strong> Código pipeline</li>
+                                    <li><strong>tests/</strong> Pruebas automáticas</li>
+                                </ul>
+                                <p style="margin-top: 8px; font-weight: 700; color: #667eea; font-size: 0.85em;">Estructura consistente</p>
+                            </div>
+
+                            <div class="box">
+                                <h3>Poetry</h3>
+                                <ul>
+                                    <li>Versiones de librerías</li>
+                                    <li>Archivo lockfile</li>
+                                    <li>Mismo ambiente siempre</li>
+                                    <li>Instalaciones repetibles</li>
+                                </ul>
+                                <p style="margin-top: 8px; font-weight: 700; color: #667eea; font-size: 0.85em;">Reproduce resultados</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-note">
+                    Ref: Cookiecutter. (2023). Save time and stay consistent | Poetry. (s.f.). Poetry Documentation
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">3</div>
+                    <h2>Seguimiento con MLflow</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_3.png" alt="MLflow" class="section-image">
+
+                    <div class="content-area">
+                        <div class="flow">
+                            <h3>Organización de Experimentos</h3>
+                            <div class="flow-box">
+                                <h4>1. Experimento</h4>
+                                <p>Objetivo (ejemplo. "Clasificar entradas y salidas")</p>
+                            </div>
+                            <div class="flow-box">
+                                <h4>2. Corrida (Run)</h4>
+                                <p>Intento con hyper parámetros específicos</p>
+                            </div>
+                            <div class="flow-box">
+                                <h4>3. Versión</h4>
+                                <p>Modelo guardado con metadatos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="box">
+                        <h3>MLflow Tracking</h3>
+                        <ul>
+                            <li>Guarda parámetros</li>
+                            <li>Registra métricas</li>
+                            <li>Almacena modelos</li>
+                            <li>Compara resultados</li>
+                        </ul>
+                    </div>
+
+                    <div class="box">
+                        <h3>Control de Datos</h3>
+                        <ul>
+                            <li>DVC para datasets</li>
+                            <li>Saber qué datos usaste</li>
+                            <li>Repetir experimentos</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                            <h3>Ciclo de Vida</h3>
+                            <p><strong>Development:</strong> Pruebas | <strong>Staging:</strong> Validación | <strong>Production:</strong> En vivo | <strong>Archive:</strong> Guardado</p>
+                    </div>
+                </div>
+
+                <div class="ref-note">
+                    Ref: MLflow. (s.f.). MLflow Tracking | MLflow. (s.f.). Model Registry Quickstart
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">4</div>
+                    <h2>Reproducibilidad</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_4.png" alt="Reproducibilidad" class="section-image">
+
+                    <div class="content-area">
+                        <div class="flow">
+                            <h3>Pipeline FTI</h3>
+                            <div class="flow-box">
+                                <h4>Feature Pipeline</h4>
+                                <p>Datos crudos → Características</p>
+                            </div>
+                            <div class="flow-box">
+                                <h4>Training Pipeline</h4>
+                                <p>Características → Modelo</p>
+                            </div>
+                            <div class="flow-box">
+                                <h4>Inference Pipeline</h4>
+                                <p>Nuevos datos → Predicciones</p>
+                            </div>
+                            <p style="text-align: center; margin-top: 8px; font-weight: 700;">Mismo proceso siempre</p>
+                        </div>
+
+                        <div class="two-column">
+                            <div class="box">
+                                <h3>Problemas</h3>
+                                <p>Código diferente entre entrenamiento y producción</p>
+                                <p>Versiones de librerías cambian</p>
+                            </div>
+
+                            <div class="box">
+                                <h3>Soluciones</h3>
+                                <p>Scikit-learn Pipelines</p>
+                                <p>Docker congela ambiente</p>
+                                <p>Seeds fijas en división</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-note">
+                    Ref: Galli, S. (2020). Reproducible ML Pipeline | Onose, E. (2025). Reproducibility in ML | scikit-learn. (s.f.). Pipelines
+                </div>
+            </div>
+
+            <!-- SECCIÓN 5 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">5</div>
+                    <h2>Pruebas (Testing)</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_5.png" alt="Testing" class="section-image">
+
+                    <div class="content-area">
+                        <div class="two-column">
+                            <div class="box">
+                                <h3>Pruebas Unitarias</h3>
+                                <p>Cada parte separada: datos, características, configuración</p>
+                            </div>
+
+                            <div class="box">
+                                <h3>Pruebas de Integración</h3>
+                                <p>Todo el flujo junto: datos hasta modelo</p>
+                            </div>
+                        </div>
+
+                        <div class="two-column">
+                            <div class="box">
+                                <h3>Pruebas Diferenciales</h3>
+                                <p>¿Nuevo modelo mejor que el anterior?</p>
+                            </div>
+
+                            <div class="box">
+                                <h3>Shadow Mode</h3>
+                                <p>Prueba en producción sin afectar usuarios</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-note">
+                    Ref: Ahmed, S. (s.f.). ML Workflows with Scikit-learn Pipelines. KDnuggets
+                </div>
+            </div>
+
+            <!-- SECCIÓN 6 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">6</div>
+                    <h2>Herramientas Clave</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_6.png" alt="Herramientas" class="section-image">
+
+                    <div class="content-area">
+                        <div class="tools">
+                            <div class="tool">Prefect</div>
+                            <div class="tool">Poetry</div>
+                            <div class="tool">MLflow</div>
+                            <div class="tool">Docker</div>
+                            <div class="tool">GitHub</div>
+                        </div>
+
+                        <div class="two-column">
+                            <div class="box">
+                                <h3>Prefect</h3>
+                                <ul>
+                                    <li>Coordina tareas</li>
+                                    <li>Sabe qué falló</li>
+                                    <li>Reintenta automático</li>
+                                    <li>Escala fácil</li>
+                                </ul>
+                            </div>
+
+                            <div class="box">
+                                <h3>Docker</h3>
+                                <ul>
+                                    <li>Empaqueta ambiente</li>
+                                    <li>Mismo en todas máquinas</li>
+                                    <li>Adiós al "funciona en mi máquina"</li>
+                                    <li>Fácil desplegar</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-note">
+                    Ref: Prefect. (s.f.). Introduction. Prefect Documentation | MLflow. (s.f.). Your First MLflow Model
+                </div>
+            </div>
+
+            <!-- SECCIÓN 7 -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">7</div>
+                    <h2>El Equipo MLOps</h2>
+                </div>
+
+                <div class="horizontal-layout">
+                    <img src="img/seccion_7.png" alt="Equipo" class="section-image">
+
+                    <div class="content-area">
+                        <div class="two-column">
+                            <div class="role">
+                                <h3>Científico de Datos (DS)</h3>
+                                <p>Experimenta con modelos. Crea prototipos. Empieza simple.</p>
+                            </div>
+
+                            <div class="role">
+                                <h3>Ingeniero de Software (SE)</h3>
+                                <p>Código profesional. Limpio, probado y organizado.</p>
+                            </div>
+
+                            <div class="role">
+                                <h3>Ingeniero de Datos (DE)</h3>
+                                <p>Maneja datos. Limpios y a tiempo.</p>
+                            </div>
+
+                            <div class="role">
+                                <h3>Ingeniero ML (MLE)</h3>
+                                <p>Modelos en pruebas y producción. MLflow.</p>
+                            </div>
+
+                            <div class="role" style="grid-column: span 2;">
+                                <h3>Ingeniero DevOps</h3>
+                                <p>Infraestructura y monitoreo. Servidores, logs, alertas. Docker, CI/CD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REFERENCIAS -->
+            <div class="references">
+                <h3>Referencias</h3>
+                <ol>
+                    <li>Ahmed, S. (s.f.). Managing Machine Learning Workflows with Scikit-learn Pipelines Part 1: A Gentle Introduction. KDnuggets.</li>
+                    <li>Amos, D. (2024, 15 de diciembre). Object-Oriented Programming (OOP) in Python. Real Python.</li>
+                    <li>Anthropic. (2025). Claude 4.5 Sonnet. https://www.anthropic.com/claude/sonnet</li>
+                    <li>Cookiecutter. (2023). Save time and stay consistent. Cookiecutter.</li>
+                    <li>Galli, S. (2020, 27 de enero). How To Build And Deploy A Reproducible Machine Learning Pipeline. Medium.</li>
+                    <li>Google DeepMind. (2025). Imagen 4 Ultra. https://deepmind.google/models/imagen/</li>
+                    <li>MLflow. (s.f.). MLflow Tracking. MLflow Docs.</li>
+                    <li>MLflow. (s.f.). Model Registry Quickstart. MLflow Docs.</li>
+                    <li>MLflow. (s.f.). Your First MLflow Model: Complete Tutorial. MLflow Docs.</li>
+                    <li>Onose, E. (2025, 15 de mayo). How to Solve Reproducibility in ML. Neptune Blog.</li>
+                    <li>Poetry. (s.f.). Introduction | Documentation | Poetry - Python dependency management and packaging made easy. Poetry Documentation.</li>
+                    <li>Prefect. (s.f.). Introduction. Prefect Documentation.</li>
+                    <li>scikit-learn. (s.f.). 7.1. Pipelines and composite estimators (Versión 1.7.2). scikit-learn documentation.</li>
+                    <li>Senthil E. (2023, 10 de marzo). MLOps-Refactoring Python Code. Introduction. Analytics Vidhya. Medium.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>Conclusión</h3>
+            <p>MLOps combina buenas prácticas de programación, herramientas de seguimiento y trabajo en equipo. Con estas prácticas, tu modelo de ML será confiable, repetible y fácil de mantener en producción.</p>
+            <p style="margin-top: 20px; font-size: 1.1em; font-weight: 700; color: #fff;">Powered by Claude AI (Anthropic) & Imagen 4 (Google DeepMind)</p>
+        </div>
+    </div>
+</body>
+</html>
